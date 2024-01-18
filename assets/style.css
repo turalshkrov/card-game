@@ -1,0 +1,41 @@
+@import "../node_modules/starry-night-css/dist/index.css";
+
+#root {
+  margin: auto;
+}
+.card-item {
+  padding: .25rem;
+}
+.game-card {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: stretch;
+  height: auto;
+}
+.game-card .card-back-img {
+  width: 100%;
+  position: absolute;
+  display: block;
+  height: auto;
+}
+.card-front-img {
+  width: 100%;
+  transform: rotateY(-180deg);
+}
+.flip-card .card-front-img {
+  transform: rotateY(0deg);
+  transition: 1s;
+}
+.flip-card .card-back-img {
+  transform: rotateY(90deg);
+  transition: .5s;
+}
+.flip-card-back .card-front-img {
+  transform: rotateY(-180deg);
+  transition: 1s;
+}
+.flip-card-back-img {
+  transform: rotateY(0deg) !important;
+  transition: .5s;
+}

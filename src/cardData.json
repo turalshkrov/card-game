@@ -1,0 +1,32 @@
+[
+  {
+    "src": "../assets/card-imgs/card1.png",
+    "name": "spade-king-1",
+    "isFlipped": ""
+  },
+  {
+    "src": "../assets/card-imgs/card2.png",
+    "name": "spade-ace-1",
+    "isFlipped": ""
+  },
+  {
+    "src": "../assets/card-imgs/card3.png",
+    "name": "diamond-king-1",
+    "isFlipped": ""
+  },
+  {
+    "src": "../assets/card-imgs/card4.png",
+    "name": "diamond-king-2",
+    "isFlipped": ""
+  },
+  {
+    "src": "../assets/card-imgs/card5.png",
+    "name": "diamond-ace-1",
+    "isFlipped": ""
+  },
+  {
+    "src": "../assets/card-imgs/card6.png",
+    "name": "spade-king-2",
+    "isFlipped": ""
+  }
+]
