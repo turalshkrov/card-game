@@ -39,3 +39,38 @@
   transform: rotateY(0deg) !important;
   transition: .5s;
 }
+.remove-card {
+  opacity: 0;
+  transition: 1s;
+  cursor: auto;
+}
+
+#result-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: none;
+}
+.result-bg-show {
+  display: block !important;
+}
+
+#result {
+  position: absolute;
+  width: 100%;
+  height: 150px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: .8s;
+  animation: opacity .8s;
+}
+@keyframes opacity {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+#actions i {
+  font-size: 1.25rem;
+  cursor: pointer;
+}

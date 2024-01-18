@@ -1,11 +1,18 @@
-const root = document.getElementById("root");
-const cardFlipSound = new Audio('../assets/sounds/card-flip.mp3');
 import cardData from "./cardData.json" assert { type: 'json' };
+const root = document.getElementById("root");
+const resultDiv = document.querySelector("#result-bg");
+const restartBtn = document.querySelector("#restart");
+const volumeBtn = document.querySelector("#volume");
+const cardFlipSound = new Audio('../assets/sounds/card-flip.mp3');
+const victorySound = new Audio('../assets/sounds/victory.mp3');
+const defeatSound = new Audio('../assets/sounds/defeat.mp3');
 
 const cards = [ ...cardData, ...cardData ];
-let moveCount = 10;
-let score = 0;
+let volumeLevel = 1;
+let moveCount = 1;
+let score = 500;
 let flippedCard = null;
+let resulText = "";
 
 function flipCard (card) {
   if (!card.getAttribute("is-flipped")) {
@@ -14,15 +21,26 @@ function flipCard (card) {
     if (flippedCard) {
       moveCount--;
       updateMoveCountOnUi();
-
+      if (moveCount === 0) {
+        showResult(false)
+      }
       if (flippedCard.getAttribute("name") !== card.getAttribute("name")) {
         flipCardBack(card);
         flipCardBack(flippedCard);
       } else {
         score += 100;
         updateScoretOnUi();
+        if (score === 600) {
+          showResult(true);
+        }
+        setTimeout(() => {
+          card.classList.add('remove-card');
+          flippedCard.classList.add('remove-card');
+        }, 500)
       }
-      flippedCard = null;
+      setTimeout(() => {
+        flippedCard = null;
+      }, 500)
     } else flippedCard = card;
     card.setAttribute("is-flipped", "true");
   }
@@ -89,6 +107,49 @@ function updateScoretOnUi() {
   const scoretUIElement = document.querySelector("#score");
   scoretUIElement.innerText = score;
 }
+
+function showResult(boolean) {
+  if (boolean) {
+    resulText = "You Won!";
+    victorySound.play();
+  } else {
+    resulText = "You Lost!";
+    defeatSound.play();
+  }
+  resultDiv.className = "result-bg-show";
+  resultDiv.firstElementChild.classList.add("result-show");
+  resultDiv.firstElementChild.firstElementChild.innerText = resulText;
+}
+
+function restart() {
+  resultDiv.className = "";
+  resultDiv.children[0].classList.remove("result-show");
+  root.innerHTML = "";
+  score = 0;
+  moveCount = 10;
+  updateMoveCountOnUi();
+  updateScoretOnUi();
+  cardsSetup();
+}
+
+resultDiv.addEventListener("click", () => {
+  restart();
+});
+
+restartBtn.addEventListener("click", () => {
+  restart();
+});
+
+volumeBtn.addEventListener("click", () => {
+  if (volumeLevel) {
+    volumeLevel = 0;
+  } else {
+    volumeLevel = 1;
+  }
+  cardFlipSound.volume = volumeLevel;
+  victorySound.volume = volumeLevel;
+  defeatSound.volume = volumeLevel;
+})
 
 cardsSetup();
 updateMoveCountOnUi();
