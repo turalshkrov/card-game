@@ -1,4 +1,4 @@
-@import "../node_modules/starry-night-css/dist/index.css";
+@import "./index.css";
 
 #root {
   margin: auto;
