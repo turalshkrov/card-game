@@ -10,8 +10,8 @@ const defeatSound = new Audio('../assets/sounds/defeat.mp3');
 
 const cards = [ ...cardData, ...cardData ];
 let volumeLevel = 1;
-let moveCount = 1;
-let score = 500;
+let moveCount = 10;
+let score = 0;
 let flippedCard = null;
 let resulText = "";
 let timer = "00:00";
