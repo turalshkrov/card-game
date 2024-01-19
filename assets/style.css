@@ -60,11 +60,12 @@
 #result {
   position: absolute;
   width: 100%;
-  height: 150px;
+  height: 180px;
   top: 50%;
   transform: translateY(-50%);
   transition: .8s;
   animation: opacity .8s;
+  flex-direction: column;
 }
 @keyframes opacity {
   from { opacity: 0; }

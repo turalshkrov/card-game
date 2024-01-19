@@ -1,8 +1,9 @@
 import cardData from "./cardData.json" assert { type: 'json' };
-const root = document.getElementById("root");
+const root = document.querySelector("#root");
 const resultDiv = document.querySelector("#result-bg");
 const restartBtn = document.querySelector("#restart");
 const volumeBtn = document.querySelector("#volume");
+const timerLabel = document.querySelector("#timer");
 const cardFlipSound = new Audio('../assets/sounds/card-flip.mp3');
 const victorySound = new Audio('../assets/sounds/victory.mp3');
 const defeatSound = new Audio('../assets/sounds/defeat.mp3');
@@ -13,6 +14,31 @@ let moveCount = 1;
 let score = 500;
 let flippedCard = null;
 let resulText = "";
+let timer = "00:00";
+
+let seconds = 0;
+let minutes = 0;
+
+timerLabel.innerText = timer;
+const timerInterval = setInterval(() => {
+  if(minutes < 10) timer = "0" + minutes;
+  else timer = minutes;
+  if (seconds < 10) timer += ":0" + seconds;
+  else timer += ":" + seconds;
+  seconds++;
+  if (seconds === 59) {
+    minutes++;
+    seconds = 0;
+    if (minutes === 59) {
+      clearInterval(timerInterval);
+      showResult();
+      seconds = 0;
+      minutes = 0;
+    }
+  }
+  timerLabel.innerText = timer;
+}, 1000);
+
 
 function flipCard (card) {
   if (!card.getAttribute("is-flipped")) {
@@ -21,7 +47,7 @@ function flipCard (card) {
     if (flippedCard) {
       moveCount--;
       updateMoveCountOnUi();
-      if (moveCount === 0) {
+      if (moveCount === 0 && score !== 600) {
         showResult(false)
       }
       if (flippedCard.getAttribute("name") !== card.getAttribute("name")) {
@@ -71,9 +97,9 @@ const createCard = (cardData) => {
   const cardBackImg = document.createElement('img');
 
   cardFrontImg.src = cardData.src;
-  cardBackImg.src = `../assets/card-imgs/main.png`;
+  cardBackImg.src = '../assets/card-imgs/main.png';
 
-  cardFrontImg.classList.add('card-front-img');
+  cardFrontImg.className = 'card-front-img';
   cardBackImg.className = 'card-back-img';
   cardItem.className = 'col-3 card-item';
   card.className = 'game-card';
@@ -109,6 +135,8 @@ function updateScoretOnUi() {
 }
 
 function showResult(boolean) {
+  const resultTextLabel = resultDiv.querySelector('.result-text');
+  const resultTimeLabel = resultDiv.querySelector('.result-time');
   if (boolean) {
     resulText = "You Won!";
     victorySound.play();
@@ -118,7 +146,8 @@ function showResult(boolean) {
   }
   resultDiv.className = "result-bg-show";
   resultDiv.firstElementChild.classList.add("result-show");
-  resultDiv.firstElementChild.firstElementChild.innerText = resulText;
+  resultTextLabel.innerText = resulText;
+  resultTimeLabel.innerText = timer;
 }
 
 function restart() {
@@ -127,6 +156,8 @@ function restart() {
   root.innerHTML = "";
   score = 0;
   moveCount = 10;
+  seconds = 0;
+  minutes = 0;
   updateMoveCountOnUi();
   updateScoretOnUi();
   cardsSetup();
